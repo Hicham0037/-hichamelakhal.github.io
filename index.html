@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js no-touch csstransitions">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="author" content="Aissa Ben Yahya" />
+  <meta name="description" content="Personal website of Hicham El Akhal – Researcher in AI and Data Science." />
+  <meta name="keywords" content="Hicham El Akhal, AI researcher, Data Science, Machine Learning, Olive Disease Detection" />
+
+  <title>Hicham El Akhal – Researcher in AI & Data Science</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Favicon (Optional) -->
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0; padding: 0;
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom right, #f8f9fa, #ffffff);
+      color: #222;
+      scroll-behavior: smooth;
+    }
+    a {
+      color: #007BFF;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover, a:focus {
+      color: #0056b3;
+      outline: none;
+    }
+    #wrapper {
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 280px;
+      height: 100vh;
+      background-color: #f8f9fa;
+      border-right: 1px solid #ddd;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 2px 0 5px rgb(0 0 0 / 0.05);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+    #sidebar.collapsed {
+      transform: translateX(-100%);
+    }
+    #sidebar .sidebar-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    #sidebar img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+      transition: transform 0.3s ease;
+    }
+    #sidebar img:hover {
+      transform: scale(1.05);
+    }
+    #sidebar h2 {
+      margin: 0.5rem 0 0.25rem;
+      font-weight: 600;
+      font-size: 1.5rem;
+      color: #212529;
+    }
+    #sidebar a.email-link {
+      font-size: 0.875rem;
+      color: #6c757d;
+      word-break: break-all;
+    }
+    #sidebar nav {
+      flex-grow: 1;
+      width: 100%;
+    }
+    #sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    #sidebar li {
+      margin-bottom: 1rem;
+    }
+    #sidebar a.nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      font-weight: 500;
+      font-size: 1rem;
+      color: #212529;
+      border-radius: 6px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    #sidebar a.nav-link i {
+      margin-right: 0.75rem;
+      font-size: 1.2rem;
+      width: 20px;
+      text-align: center;
+      color: #6c757d;
+      transition: color 0.3s ease;
+    }
+    #sidebar a.nav-link:hover,
+    #sidebar a.nav-link.active {
+      background-color: #007BFF;
+      color: white;
+    }
+    #sidebar a.nav-link:hover i,
+    #sidebar a.nav-link.active i {
+      color: white;
+    }
+    #sidebar .btn-download-cv {
+      margin-top: auto;
+      width: 100%;
+      padding: 0.75rem;
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: none;
+      background-color: #007BFF;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    #sidebar .btn-download-cv:hover,
+    #sidebar .btn-download-cv:focus {
+      background-color: #0056b3;
+      outline: none;
+    }
+    #sidebar .btn-download-cv i {
+      margin-right: 0.5rem;
+      font-size: 1.2rem;
+    }
+    #main {
+      margin-left: 280px;
+      padding: 3rem 4rem;
+      max-width: 900px;
+      flex-grow: 1;
+    }
+    h1, h2, h3 {
+      font-weight: 700;
+      color: #212529;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 2rem;
+      border-bottom: 2px solid #007BFF;
+      padding-bottom: 0.5rem;
+      margin-top: 3rem;
+    }
+    h3 {
+      font-size: 1.4rem;
+      margin-top: 1.5rem;
+    }
+    section {
+      margin-bottom: 3rem;
+      background-color: #fff;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    section:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    }
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #444;
+    }
+    .btn-outline-primary, .btn-outline-secondary, .btn-outline-info {
+      border-radius: 30px;
+      border-width: 2px;
+      padding: 0.5rem 1rem;
+      font-weight: 600;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      cursor: pointer;
+      border: 2px solid currentColor;
+      background: transparent;
+      text-align: center;
+      display: inline-block;
+      margin-right: 1rem;
+      color: inherit;
+      font-size: 1rem;
+    }
+    .btn-outline-primary:hover {
+      background-color: #007BFF;
+      color: white;
+      border-color: #007BFF;
+    }
+    .btn-outline-secondary:hover {
+      background-color: #6c757d;
+      color: white;
+      border-color: #6c757d;
+    }
+    .btn-outline-info:hover {
+      background-color: #17a2b8;
+      color: white;
+      border-color: #17a2b8;
+    }
+    .external-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .external-links a:hover {
+      transform: scale(1.05);
+    }
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      color: #666;
+      font-size: 0.9rem;
+      padding-top: 2rem;
+      border-top: 1px solid #ddd;
+    }
+    @media (max-width: 900px) {
+      #sidebar {
+        position: fixed;
+        width: 240px;
+        transform: translateX(-100%);
+      }
+      #sidebar.active {
+        transform: translateX(0);
+      }
+      #main {
+        margin-left: 0;
+        padding: 2rem 1.5rem;
+        max-width: 100%;
+      }
+      #hamburger {
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        background: #007BFF;
+        border: none;
+        padding: 0.5rem 0.75rem;
+        border-radius: 4px;
+        color: white;
+        font-size: 1.25rem;
+        cursor: pointer;
+        z-index: 1100;
+        box-shadow: 0 2px 6px rgb(0 0 0 / 0.3);
+        transition: background-color 0.3s ease;
+      }
+      #hamburger:hover {
+        background-color: #0056b3;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="sidebar" hidden>
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div id="wrapper">
+    <aside id="sidebar" aria-label="Primary Navigation" role="navigation">
+      <div class="sidebar-header">
+        <a href="#about" aria-label="Homepage - Hicham El Akhal">
+          <img src="img/img.jpeg" alt="Hicham El Akhal Photo" />
+        </a>
+        <h2>Hicham El Akhal</h2>
+        <a href="mailto:hi.elakhal@edu.umi.ac.ma" class="email-link">hi.elakhal@edu.umi.ac.ma</a>
+      </div>
+<nav>
+  <ul>
+    <li><a href="#about" class="nav-link active"><i class="fa fa-user"></i> About Me</a></li>
+    <li><a href="#research" class="nav-link"><i class="fa fa-book"></i> Research</a></li>
+    <li><a href="#publications" class="nav-link"><i class="fa fa-file-alt"></i> Publications</a></li>
+    <li><a href="#teaching" class="nav-link"><i class="fa fa-chalkboard-teacher"></i> Teaching</a></li>
+    <li><a href="#competitions" class="nav-link"><i class="fa fa-trophy"></i> Competitions</a></li>
+    <li><a href="#projects-skills" class="nav-link"><i class="fa fa-tools"></i> Projects & Skills</a></li>
+    <li><a href="#innovation" class="nav-link"><i class="fa fa-lightbulb"></i>  Outreach</a></li>
+    <li><a href="#contact" class="nav-link"><i class="fa fa-envelope"></i> Contact</a></li>
+  </ul>
+</nav>
+
+
+      
+    </aside>
+
+    <main id="main" tabindex="-1">
+      <!-- About Me -->
+      <section id="about" tabindex="0">
+        <h1>About Me</h1>
+        <p>Hicham El Akhal holds a Ph.D. in Computer Science specializing in Artificial Intelligence and Data Science from Moulay Ismail University of Meknes.</p>
+
+        <section id="about" tabindex="0">
+
+      <div class="external-links" role="list">
+        <a href="https://scholar.google.com/citations?user=hV9pbwQAAAAJ&amp;hl=fr" target="_blank" rel="noopener noreferrer" class="btn-outline-primary" role="listitem" aria-label="Google Scholar Profile">Google Scholar</a>
+        <a href="https://orcid.org/0000-0003-4488-3338" target="_blank" rel="noopener noreferrer" class="btn-outline-primary" role="listitem" aria-label="ORCID Profile">ORCID</a>
+        <a href="https://www.scopus.com/authid/detail.uri?authorId=58618744900" target="_blank" rel="noopener noreferrer" class="btn-outline-secondary" role="listitem" aria-label="Scopus Author Profile">Scopus</a>
+      </div>
+    </section>
+
+       
+      </section>
+
+      <!-- Research Section -->
+     <section id="research" tabindex="0">
+  <h2>Research</h2>
+  <p>
+    My research interests lie at the intersection of the following domains:
+  </p>
+  <ul>
+    <li>Machine Learning</li>
+    <li>Deep Learning</li>
+    <li>Computer Vision</li>
+    <li>Natural Language Processing (NLP)</li>
+    <li>Precision Agriculture</li>
+    <li>Data Generation</li>
+    <li>Lightweight and Embedded AI Systems</li>
+    <li>Data Science</li>
+  </ul>
+</section>
+
+
+ <!-- Publications Section -->
+<section id="publications" tabindex="0">
+  <h2>Publications</h2>
+
+  <h3>Journal Articles</h3>
+  <ul>
+    <li>
+      El Akhal, H., Ben Yahya, A., & El Alaoui, A. E. B. (2025). <strong>Positive discrimination of minority classes through data generation and distribution: A case study in olive disease classification.</strong> <em>Engineering Applications of Artificial Intelligence</em>, 139, 109646. <a href="https://doi.org/10.1016/j.engappai.2024.109646" target="_blank" rel="noopener noreferrer">DOI</a> — SJR: 1.75, IF: 7.5, Q1
+    </li>
+    <li>
+      Ben Yahya, A., El Akhal, H., El Alaoui, A. E. B., et al. (2025). <strong>Bayes-based word weighting for enhanced vulnerability classification in critical infrastructure systems.</strong> <em>Computers & Security</em>, 104451. <a href="https://doi.org/10.1016/j.cose.2025.104451" target="_blank" rel="noopener noreferrer">DOI</a> — SJR: 1.57, IF: 4.8, Q1
+    </li>
+    <li>
+      El Akhal, H., Ben Yahya, A., Moussa, N., & El Alaoui, A. E. B. (2023). <strong>A novel approach for image-based olive leaf diseases classification using a deep hybrid model.</strong> <em>Ecological Informatics</em>, 77, 102276. <a href="https://doi.org/10.1016/j.ecoinf.2023.102276" target="_blank" rel="noopener noreferrer">DOI</a> — SJR: 1.1, IF: 5.9, Q1
+    </li>
+  </ul>
+
+  <h3>Conference Proceedings</h3>
+  <ul>
+    <li>
+      El Akhal, H., Ben Yahya, A., & El Alaoui, A. E. B. (2025). <strong>Deep learning vs deep hybrid models: A performance evaluation for olive diseases image classification.</strong> In <em>Statistical Methods for Data Analysis and Decision Sciences (SDS 2025)</em>, Springer, Milan, Italy. (To appear)
+    </li>
+    <li>
+      El Akhal, H., Ben Yahya, A., & El Alaoui, A. E. B. (2025). <strong>The impact of data balancing through data generation techniques on improving deep learning model performance.</strong> In <em>Innovative Approaches and Applications for Sustainable Development</em>, Springer, Meknes, Morocco. (To appear)
+    </li>
+    <li>
+      Ben Yahya, A., El Akhal, H., & El Alaoui, A. E. B. (2024). <strong>Enhanced classification of embedded system vulnerabilities using ensemble embedding and BiLSTM networks.</strong> In <em>IDEAS 2024</em>, Springer, pp. 35–48. <a href="https://doi.org/10.1007/978-3-031-83472-1_3" target="_blank" rel="noopener noreferrer">DOI</a>
+    </li>
+    <li>
+      El Akhal, H., Ben Yahya, A., & El Alaoui, A. E. B. (2022). <strong>Image-based olive disease classification using deep transfer learning.</strong> In <em>ICCSRE 2022</em>, Agadir. (To appear)
+    </li>
+    <li>
+      Chouchf, S., El Akhal, H., Zarrik, W., & El Alaoui, A. E. B. (2025). <strong>A Comparison of Quantization Techniques for Mobile Olive Disease Detection.</strong> In <em>IRASET 2025</em>, Fès. <a href="https://doi.org/10.1109/IRASET64571.2025.11008013" target="_blank" rel="noopener noreferrer">DOI</a>
+    </li>
+  </ul>
+
+  <h3>Books and Book Chapters</h3>
+  <ul>
+    <li>
+      Ben Yahya, A., El Akhal, H., & El Alaoui, A. E. B. (2024). <strong>Machine learning-based collection and analysis of embedded systems vulnerabilities.</strong> In <em>Enhancing Performance, Efficiency, and Security Through Complex Systems Control</em>, IGI Global, pp. 242–261. <a href="https://doi.org/10.4018/979-8-3693-0497-6.ch014" target="_blank" rel="noopener noreferrer">DOI</a>
+    </li>
+  </ul>
+</section>
+
+
+
+      <!-- Teaching Section -->
+      <section id="teaching" tabindex="0">
+  <h2>Teaching Experience</h2>
+  <p><strong>2022/2023 and 2023/2024</strong>: Lecturer in the <strong>Master of Computer Networks and Embedded Systems</strong> program at the <strong>Faculty of Sciences, Moulay Ismail University of Meknes</strong>.</p>
+  <ul>
+    <li><strong>2022/2023</strong>
+      <ul>
+        <li>Course: Embedded and Real-Time Systems — Practical Sessions</li>
+        <li>Course: Network Security — Practical Sessions</li>
+      </ul>
+    </li>
+    <li><strong>2023/2024</strong>
+      <ul>
+        <li>Course: Embedded Development — Practical Sessions</li>
+      </ul>
+    </li>
+  </ul>
+</section>
+
+
+   <!-- Competitions Section -->
+<section id="competitions" tabindex="0">
+  <h2>Competitions & Awards</h2>
+  <p>
+    <strong>Winner of the UNESCO India-Africa Hackathon (UIA)</strong>: Awarded at the international hackathon held from November 22 to 25, 2022, at Gautam Buddha University, Greater Noida, India.
+  </p>
+  <img 
+    src="img/hicham.jpeg" 
+    alt="UNESCO India-Africa Hackathon Award" 
+    style="max-width: 100%; height: auto; margin-top: 15px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);" 
+  />
+</section>
+
+
+<section id="projects-skills" tabindex="0">
+  <h2>Projects & Skills</h2>
+
+  <h3>Selected Projects</h3>
+  <ul class="project-list">
+    <li>
+      <strong>2016–2017 – Population Dynamics Modeling</strong><br>
+      Developed a mathematical and numerical simulation of a population dynamics problem in biology using a graphical interface. <br>
+      <em>Final Year Project – Bachelor in Mathematics and Computer Science, Polydisciplinary Faculty, Sidi Mohamed Ben Abdellah University, Taza.</em>
+    </li>
+    <li>
+      <strong>2019–2020 – Olive Tree Disease Detection Dataset</strong><br>
+      Built and explored a custom image dataset for diagnosing olive tree diseases using computer vision. <br>
+      <em>Final Year Project – Master's in Computer Networks and Embedded Systems, Faculty of Sciences, Moulay Ismail University, Meknes.</em>
+    </li>
+    <li>
+      <strong>2019–2020 – Network File Systems Security</strong><br>
+      Conducted a study and practical implementation of secure networked file systems. <br>
+      <em>Master's in Computer Networks and Embedded Systems, Faculty of Sciences, Moulay Ismail University, Meknes.</em>
+    </li>
+    <li>
+      <strong>2019–2020 – FPGA-Based Display Management</strong><br>
+      Designed and implemented a 7-segment display controller using FPGA technology. <br>
+      <em>Embedded Systems Project – Master's in Computer Networks and Embedded Systems, Faculty of Sciences, Moulay Ismail University, Meknes.</em>
+    </li>
+    <li>
+      <strong>2019–2020 – Raspberry Pi FM Transmitter</strong><br>
+      Built a functional FM transmitter using a Raspberry Pi for educational purposes. <br>
+      <em>Final Year Project – Master's in Computer Networks and Embedded Systems, Faculty of Sciences, Moulay Ismail University, Meknes.</em>
+    </li>
+  </ul>
+
+  <h3>Technical Skills</h3>
+  <ul class="skills-list">
+    <li><strong>Languages:</strong> Arabic, English, French</li>
+    <li><strong>Programming:</strong> Java, C, C++, PHP, Python, R, SQL, XML/XSL, LaTeX</li>
+    <li><strong>Databases:</strong> MySQL, PostgreSQL, Oracle, SQLite</li>
+    <li><strong>Web Development:</strong> HTML, CSS, JavaScript, Apache, Tomcat</li>
+    <li><strong>AI & Machine Learning:</strong> TensorFlow, Keras, PyTorch, Scikit-learn, OpenCV, Pandas, NumPy, Matplotlib, Seaborn</li>
+  </ul>
+</section>
+<section id="innovation" class="section">
+  <div class="container">
+    <h2><i class="fa fa-lightbulb" aria-hidden="true"></i> Innovation & Outreach</h2>
+    <table role="table" style="width:100%; border-collapse: collapse; margin-top: 1rem;">
+      <thead>
+        <tr style="background-color: #007BFF; color: white;">
+          <th style="padding: 0.75rem; text-align: left; border: 1px solid #ddd;">Year</th>
+          <th style="padding: 0.75rem; text-align: left; border: 1px solid #ddd;">Activity</th>
+          <th style="padding: 0.75rem; text-align: left; border: 1px solid #ddd;">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">2023</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">Artificial Intelligence Symposium</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">Member of the organizing team – Meknès, Morocco (June 2023)</td>
+        </tr>
+        <tr style="background-color: #f9f9f9;">
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">2024</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">New Generation Doctoral Days</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">Organizing team member – Meknès, Morocco</td>
+        </tr>
+        <tr>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">2024</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">SIAM Meknès Presentation</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">
+            “An Intelligent Mobile Application for Instant Recognition of Olive Tree Diseases”
+          </td>
+        </tr>
+        <tr style="background-color: #f9f9f9;">
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">2025</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">SIAM Meknès Presentation</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">
+            “Creation of a Dataset for Embedded Intelligence Targeting Real-Time Diagnosis of Olive Tree Pests”
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">Since 2023</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">Scientific Reviewer</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">
+            Reviewer for peer-reviewed journals including IEEE T-ITS, Engineering Applications of AI, Multimedia Tools and Applications, Array, IEEE Access, IEEE JBHI, and others
+          </td>
+        </tr>
+        <tr style="background-color: #f9f9f9;">
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">Feb 2021</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">Machine Learning Training</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">Completed online course on Sololearn platform</td>
+        </tr>
+        <tr>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">2023</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">Oral Presentation</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">
+            “A Comparative Analysis of Custom CNN Architecture and Transfer Learning for Olive Disease Classification” – AI Symposium, Meknès
+          </td>
+        </tr>
+        <tr style="background-color: #f9f9f9;">
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">2024</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">Oral Presentation</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">
+            “Recognition of Olive Diseases through Deep Features and Ensemble Stacking – a Lightweight Model for Resource-Constrained Systems” – New Generation Doctoral Days, Meknès
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">2023</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">Founder</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">
+            Intelligent olive disease detection platform: <a href="https://mobaraka.resi.umi.ac.ma/" target="_blank" rel="noopener noreferrer">MOBARAKA</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+
+
+
+
+      <!-- Contact Section -->
+     <section id="contact" tabindex="0">
+  <h2>Contact</h2>
+  <p>Feel free to get in touch with me via email: 
+    <a href="mailto:hi.elakhal@edu.umi.ac.ma">hi.elakhal@edu.umi.ac.ma</a>
+  </p>
+  <p>Or connect with me on LinkedIn: 
+    <a href="https://www.linkedin.com/in/hicham-el-akhal-phd-4890b8116/" target="_blank" rel="noopener noreferrer">
+      LinkedIn Profile
+    </a>
+  </p>
+</section>
+
+
+      <!-- Footer -->
+      <footer aria-label="Page Footer" style="text-align:center; margin-top:4rem; color:#666; font-size:0.9rem;">
+        <p>© 2025 Hicham El Akhal | 
+        <p>Last updated: 
+          <script>
+            const lastModified = new Date(document.lastModified);
+            document.write(lastModified.toLocaleDateString());
+          </script>
+        </p>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Sidebar toggle for mobile
+    const sidebar = document.getElementById('sidebar');
+    const hamburger = document.getElementById('hamburger');
+
+    function checkScreenWidth() {
+      if(window.innerWidth <= 900) {
+        hamburger.hidden = false;
+        sidebar.classList.add('collapsed');
+      } else {
+        hamburger.hidden = true;
+        sidebar.classList.remove('collapsed');
+      }
+    }
+
+    hamburger.addEventListener('click', () => {
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+      hamburger.setAttribute('aria-expanded', !expanded);
+      sidebar.classList.toggle('collapsed');
+    });
+
+    window.addEventListener('resize', checkScreenWidth);
+    window.addEventListener('load', checkScreenWidth);
+
+    // Smooth scroll + active link highlight
+    const navLinks = document.querySelectorAll('#sidebar a.nav-link');
+    const sections = Array.from(navLinks).map(link => document.querySelector(link.getAttribute('href')));
+
+    window.addEventListener('scroll', () => {
+      let scrollPos = window.scrollY + 120;
+      for(let i = sections.length - 1; i >= 0; i--) {
+        if(sections[i] && sections[i].offsetTop <= scrollPos) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          navLinks[i].classList.add('active');
+          break;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
